@@ -1,0 +1,126 @@
+{% extends "base.html" %} {% block title %}Welcome{% endblock title %} {% block
+content %}
+<h1 class="text-4xl md:text-5xl font-extrabold leading-tight">
+    Hi, I'm Tanveer — a Full Stack Developer & Self-Taught SysAdmin.
+</h1>
+
+<p class="mt-6 text-lg text-gray-300">
+    I build performant, secure, and maintainable web applications using
+    <span class="text-white font-semibold">Laravel</span>. Beyond web
+    development, I handle Linux servers, automate deployment pipelines, and
+    optimize infrastructure using tools like
+    <span class="font-semibold">NGINX</span>,
+    <span class="font-semibold">Docker</span>, and
+    <span class="font-semibold">systemd</span>.
+</p>
+
+<p class="mt-4 text-lg text-gray-300">
+    From building REST APIs and scalable backends to managing uptime and DevOps
+    workflows — I care deeply about clean code, automation, and reliability.
+</p>
+
+<p class="mt-4 text-lg text-gray-300">
+    My goal? Deliver fast, secure, and elegant solutions that make an impact —
+    whether for a side project, startup, or enterprise system.
+</p>
+
+<div class="pt-6">
+    <a
+        href="{{ get_url(path='@/blog/_index.md') }}"
+        class="inline-block px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg shadow transition"
+    >
+        Read My Blog →
+    </a>
+</div>
+
+<hr class="my-10 border-gray-700" />
+
+<div>
+    <h2 class="text-2xl font-bold mb-4">📬 Get in Touch</h2>
+    <p class="text-lg text-gray-300 mb-4">
+        I'm always open to collaborating, freelancing, or just chatting tech.
+    </p>
+    <ul class="text-gray-300 space-y-2">
+        <li>
+            <strong>Email:</strong>
+            <a
+                href="#"
+                class="obfuscated-link text-blue-400 hover:underline text-lg"
+                data-encoded="bWVAY29vbGFucy5kZXY="
+                >Loading...</a
+            >
+        </li>
+            <strong>Github:</strong>
+            <a
+                href="#"
+                class="obfuscated-link text-blue-400 hover:underline text-lg"
+                data-encoded="aHR0cHM6Ly9naXRodWIuY29tL2Nvb2xuc3g="
+                target="_blank"
+                rel="noopener noreferrer"
+                >Loading...</a
+            >
+        </li>
+        <li>
+            <strong>LinkedIn:</strong>
+            <a
+                href="#"
+                class="obfuscated-link text-blue-400 hover:underline text-lg"
+                data-encoded="aHR0cHM6Ly9saW5rZWRpbi5jb20vaW4vY29vbGFucw=="
+                target="_blank"
+                rel="noopener noreferrer"
+                >Loading...</a
+            >
+        </li>
+        <li>
+            <strong>Matrix:</strong>
+            <a
+                href="#"
+                class="obfuscated-link text-blue-400 hover:underline text-lg"
+                data-encoded="aHR0cHM6Ly9tYXRyaXgudG8vIy9AY29vbGFuczpjb29sYW5zLmRldg=="
+                target="_blank"
+                rel="noopener noreferrer"
+                >Loading...</a
+            >
+        </li>
+    </ul>
+</div>
+
+<script>
+    function decodeAndFillLinks() {
+        const links = document.querySelectorAll(".obfuscated-link");
+        links.forEach((link) => {
+            const encoded = link.getAttribute("data-encoded");
+            if (!encoded) return;
+
+            const decoded = atob(encoded);
+
+            // Determine if email, phone, or URL by simple checks:
+            if (decoded.includes("@") && !decoded.startsWith('http')) {
+                // Email
+                link.href = `mailto:${decoded}`;
+                link.textContent = decoded;
+                return;
+            }
+            if (decoded.startsWith('http')) {
+                // URL - set href to full URL,
+                // but visible text to last segment after last '/'
+                link.href = decoded;
+
+                // Remove trailing slash if any
+                const trimmed = decoded.endsWith('/') ? decoded.slice(0, -1) : decoded;
+
+                // Extract last segment after '/'
+                const parts = trimmed.split('/');
+                const lastSegment = parts[parts.length - 1] || decoded;
+                link.textContent = lastSegment;
+            } else {
+                // Default fallback — just text
+                link.textContent = decoded;
+            }
+        });
+    }
+
+    document.addEventListener("DOMContentLoaded", decodeAndFillLinks);
+</script>
+
+{% endblock content %}

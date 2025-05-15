@@ -1,1 +1,31 @@
 allanime.xml
+# Zola build output
+/public/
+
+# Zola cache and temp files
+/.zola/
+
+# Environment files
+.env
+
+# Node modules (if you use npm/yarn for assets)
+node_modules/
+
+# Logs
+*.log
+
+# macOS system files
+.DS_Store
+
+# VSCode settings
+.vscode/
+
+# Editor swap files
+*.swp
+*.swo
+
+# Backup files
+*~
+
+# Other OS generated files
+Thumbs.db

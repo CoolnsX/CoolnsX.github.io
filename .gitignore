@@ -11,6 +11,9 @@ allanime.xml
 # Node modules (if you use npm/yarn for assets)
 node_modules/
 
+# static styles
+main.css
+
 # Logs
 *.log
 

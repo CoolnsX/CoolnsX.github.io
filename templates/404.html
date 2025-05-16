@@ -2,6 +2,10 @@
 
 {% block title %} Not Found {% endblock title %}
 
+{% block head_extra %}
+<link rel="preload" as="image" href="{{ get_url(path='assets/404.webp') | safe }}?v={{ get_hash(path='assets/404.webp') }}" type="image/webp" />
+{% endblock head_extra %}
+
 {% block content %}
 <div class="flex flex-col items-center justify-center text-center min-h-[60vh] space-y-10">
     <h1 class="text-5xl md:text-7xl font-extrabold text-white drop-shadow-lg">

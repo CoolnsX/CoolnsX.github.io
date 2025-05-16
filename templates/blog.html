@@ -3,12 +3,92 @@
 {% block title %} Blogs {% endblock title %}
 
 {% block content %}
-<h1 class="text-4xl md:text-5xl font-extrabold">
-  {{ section.title }}
+<h1 class="text-4xl md:text-5xl font-extrabold mb-8 text-center">
+    {{ section.title }}
 </h1>
-<ul>
-  {% for page in section.pages %}
-  <li><a href="{{ page.permalink | safe }}">{{ page.title }}</a></li>
-  {% endfor %}
-</ul>
+
+<!-- Search Input -->
+<div class="mb-8 text-center">
+    <input
+        id="search-input"
+        type="text"
+        placeholder="Search blogs..."
+        class="w-full max-w-2xl px-4 py-2 rounded-md bg-gray-800 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-600"
+    />
+</div>
+
+<!-- Blog Posts Container -->
+<div id="blog-posts" class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+    {% for page in section.pages %}
+    <a
+        href="{{ page.permalink | safe }}"
+        class="blog-card rounded-2xl overflow-hidden bg-gray-900/80 border border-gray-600 shadow-lg backdrop-blur-md transition-transform hover:scale-[1.02]"
+        data-title="{{ page.title | safe }}"
+        data-description="{{ page.description | safe }}"
+        data-url="{{ page.permalink | safe }}"
+    >
+        {% if page.extra.image %}
+            {% set image = page.extra.image %}
+            {% if image is starting_with("http") %}
+                {% set image_url = image %}
+            {% else %}
+                {% set image_url = get_url(path=image) %}
+            {% endif %}
+
+            <img
+                src="{{ image_url | safe }}"
+                alt="{{ page.title }}"
+                class="w-full h-48 object-cover"
+                loading="lazy"
+                decoding="async"
+            />
+        {% endif %}
+
+        <div class="p-6">
+            <h2 class="text-xl font-semibold text-white mb-2">
+                {{ page.title }}
+            </h2>
+            <p class="text-white text-sm">{{ page.date }}</p>
+        </div>
+    </a>
+    {% endfor %}
+</div>
+
+<!-- ElasticLunr and Script -->
+<script src="{{ get_url(path='elasticlunr.min.js') | safe }}"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const input = document.getElementById("search-input");
+    const cards = [...document.querySelectorAll(".blog-card")];
+
+    const index = elasticlunr(function () {
+        this.addField("title");
+        this.addField("description");
+        this.setRef("url");
+    });
+
+    cards.forEach(card => {
+        index.addDoc({
+            title: card.dataset.title,
+            description: card.dataset.description,
+            url: card.dataset.url
+        });
+    });
+
+    input.addEventListener("input", function () {
+        const query = this.value.trim();
+        if (query.length < 1) {
+            cards.forEach(c => c.style.display = "");
+            return;
+        }
+
+        const results = index.search(query, { expand: true });
+        const urls = results.map(r => r.ref);
+
+        cards.forEach(card => {
+            card.style.display = urls.includes(card.dataset.url) ? "" : "none";
+        });
+    });
+});
+</script>
 {% endblock content %}

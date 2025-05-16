@@ -3,33 +3,65 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="description" content="Coolans Portfolio and Blog Website.">
         <title>{% block title %}{% endblock title %} - Coolans</title>
         <link
             rel="stylesheet"
             href="{{ get_url(path='main.css') | safe }}?v={{ get_hash(path='main.css') }}"
         />
-        <script>
+        <script defer>
             // Mobile menu toggle
             function toggleMobileMenu() {
                 const menu = document.getElementById("mobile-menu");
                 menu.classList.toggle("hidden");
             }
+
+            document.addEventListener("click", function (event) {
+                const menu = document.getElementById("mobile-menu");
+                const button = event.target.closest("button[aria-label='Toggle menu']");
+
+                // If menu is open, and click is outside menu and button — close it
+                if (
+                    !menu.classList.contains("hidden") &&
+                    !menu.contains(event.target) &&
+                    !button
+                ) {
+                    menu.classList.add("hidden");
+                }
+            });
+
+            function openFullscreenTailwind(imgElement) {
+                const overlay = document.createElement('div');
+                overlay.className = `
+                    fixed inset-0 bg-black bg-opacity-90 backdrop-blur-sm flex items-center justify-center z-50
+                    transition-opacity duration-300 ease-in-out
+                `;
+                overlay.onclick = () => overlay.remove();
+
+                const fullscreenImage = document.createElement('img');
+                fullscreenImage.src = imgElement.src;
+                fullscreenImage.alt = imgElement.alt;
+                fullscreenImage.className = `
+                    max-w-[90vw] max-h-[90vh] rounded-2xl shadow-2xl
+                    transition-transform duration-500 ease-in-out scale-95 hover:scale-100
+                `;
+
+                overlay.appendChild(fullscreenImage);
+                document.body.appendChild(overlay);
+            }
         </script>
+        <link rel="preload" as="image" href="/assets/background.webp" type="image/webp"/>
         <style>
           .bg-image {
             background-image: url('/assets/background.webp');
           }
         </style>
+        {% block head_extra %}{% endblock head_extra %}
     </head>
 
-    <body
-        class="min-h-screen flex flex-col bg-black text-white relative transition-colors duration-300"
-    >
+    <body class="min-h-screen flex flex-col bg-black text-white relative transition-colors duration-300">
         <!-- Blurred Background Image -->
-        <div
-            class="fixed inset-0 -z-10 bg-image bg-cover bg-center blur-md"
-        ></div>
+        <div class="fixed inset-0 -z-10 bg-image bg-cover bg-center blur-md"></div>
+
         <div class="fixed inset-0 bg-black/70 -z-5"></div>
 
         <!-- Top Navigation -->
@@ -46,7 +78,7 @@
 
                 <!-- Mobile menu button -->
                 <button
-                    class="md:hidden px-3 py-2 rounded-lg text-gray-300 bg-gray-900/80 border border-gray-800 hover:text-white focus:outline-none focus:ring-2 focus:ring-white"
+                    class="sm:hidden px-3 py-3 rounded-lg text-gray-300 bg-gray-900/80 border border-gray-800 hover:text-white focus:outline-none focus:ring-2 focus:ring-white"
                     aria-label="Toggle menu"
                     onclick="toggleMobileMenu()"
                 >
@@ -66,20 +98,19 @@
                 <!-- Nav Links Island -->
                 <ul
                     id="mobile-menu"
-                    class="hidden md:flex md:static absolute right-4 top-full mt-2 md:mt-0 px-6 py-3 rounded-2xl bg-gray-900/80 border border-gray-800 shadow-xl backdrop-blur-md space-x-6 md:space-x-6 flex-col md:flex-row text-gray-300 md:items-center"
+                    class="hidden sm:flex sm:static absolute right-4 top-full mt-2 sm:mt-0 px-6 py-3 rounded-2xl bg-gray-900/70 border border-gray-800 shadow-xl backdrop-blur-md space-x-6 sm:space-x-6 flex-col sm:flex-row text-gray-300 sm:items-center"
                 >
-
                     <li>
                         <a
                             href="/"
-                            class="hover:text-blue-400 block py-2 md:py-0"
+                            class="hover:text-blue-400 block py-2 sm:py-0"
                             >Home</a
                         >
                     </li>
                     <li>
                         <a
                             href="/blog"
-                            class="hover:text-blue-400 block py-2 md:py-0"
+                            class="hover:text-blue-400 block py-2 sm:py-0"
                             >Blogs</a
                         >
                     </li>
@@ -93,7 +124,7 @@
                 class="container mx-auto px-4"
             >
                 <div
-                    class="px-6 py-4 rounded-2xl bg-gray-900/80 border border-gray-800 shadow-xl backdrop-blur-md text-center text-sm"
+                    class="p-8 rounded-2xl bg-gray-900/80 border border-gray-800 shadow-xl backdrop-blur-md text-center text-sm"
                 >
                 {% block content %}{% endblock content %}
                 </div>

@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="description" content="Coolans Portfolio and Blog Website.">
         <title>{% block title %}{% endblock title %} - Coolans</title>
         <link
             rel="stylesheet"
@@ -15,6 +16,11 @@
                 menu.classList.toggle("hidden");
             }
         </script>
+        <style>
+          .bg-image {
+            background-image: url('/assets/background.webp');
+          }
+        </style>
     </head>
 
     <body
@@ -22,7 +28,7 @@
     >
         <!-- Blurred Background Image -->
         <div
-            class="fixed inset-0 -z-10 bg-[url('/assets/background.webp')] bg-cover bg-center blur-md"
+            class="fixed inset-0 -z-10 bg-image bg-cover bg-center blur-md"
         ></div>
         <div class="fixed inset-0 bg-black/70 -z-5"></div>
 

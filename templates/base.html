@@ -4,6 +4,9 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>{% block title %}{% endblock title %} - Coolans</title>
+        {% block rss %}
+          <link rel="alternate" type="application/rss+xml" title="RSS" href="{{ get_url(path="rss.xml", trailing_slash=false) }}">
+        {% endblock %}
         <link
             rel="stylesheet"
             href="{{ get_url(path='main.css') | safe }}?v={{ get_hash(path='main.css') }}"

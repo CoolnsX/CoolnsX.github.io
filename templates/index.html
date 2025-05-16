@@ -1,5 +1,8 @@
-{% extends "base.html" %} {% block title %}Welcome{% endblock title %} {% block
-content %}
+{% extends "base.html" %}
+
+{% block title %}Welcome{% endblock title %}
+
+{% block content %}
 <h1 class="text-4xl md:text-5xl font-extrabold leading-tight">
     Hi, I'm Tanveer — a Full Stack Developer & Self-Taught SysAdmin.
 </h1>
@@ -86,41 +89,28 @@ content %}
 </div>
 
 <script>
-    function decodeAndFillLinks() {
-        const links = document.querySelectorAll(".obfuscated-link");
-        links.forEach((link) => {
-            const encoded = link.getAttribute("data-encoded");
-            if (!encoded) return;
+    const links = document.querySelectorAll(".obfuscated-link");
+    links.forEach((link) => {
+        const encoded = link.getAttribute("data-encoded");
+        if (!encoded) return;
 
-            const decoded = atob(encoded);
+        const decoded = atob(encoded);
 
-            // Determine if email, phone, or URL by simple checks:
-            if (decoded.includes("@") && !decoded.startsWith('http')) {
-                // Email
-                link.href = `mailto:${decoded}`;
-                link.textContent = decoded;
-                return;
-            }
-            if (decoded.startsWith('http')) {
-                // URL - set href to full URL,
-                // but visible text to last segment after last '/'
-                link.href = decoded;
+        // Determine if email, phone, or URL by simple checks:
+        if (decoded.includes("@") && !decoded.startsWith('http')) {
+            // Email
+            link.href = `mailto:${decoded}`;
+            link.textContent = decoded;
+            return;
+        }
 
-                // Remove trailing slash if any
-                const trimmed = decoded.endsWith('/') ? decoded.slice(0, -1) : decoded;
+        link.href = decoded;
 
-                // Extract last segment after '/'
-                const parts = trimmed.split('/');
-                const lastSegment = parts[parts.length - 1] || decoded;
-                link.textContent = lastSegment;
-            } else {
-                // Default fallback — just text
-                link.textContent = decoded;
-            }
-        });
-    }
-
-    document.addEventListener("DOMContentLoaded", decodeAndFillLinks);
+        const trimmed = decoded.endsWith('/') ? decoded.slice(0, -1) : decoded;
+        const parts = trimmed.split('/');
+        const lastSegment = parts[parts.length - 1] || decoded;
+        link.textContent = lastSegment;
+    });
 </script>
 
 {% endblock content %}

@@ -1,7 +1,7 @@
 +++
 title = "Hello World"
 date = 2025-05-16
-extra.image = "assets/hello_world.webp"
+extra.image = "assets/hello_world.jpg"
 description = "My First Blog."
 +++
 

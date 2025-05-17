@@ -18,7 +18,7 @@
 </div>
 
 <!-- Blog Posts Container -->
-<div id="blog-posts" class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+<div id="blog-posts" class="grid gap-8 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
     {% for page in section.pages %}
     <a
         href="{{ page.permalink | safe }}"
@@ -34,28 +34,33 @@
             {% else %}
                 {% set image_url = get_url(path=image) %}
             {% endif %}
-
-            <img
-                src="{{ image_url | safe }}"
-                alt="{{ page.title }}"
-                class="w-full h-48 object-cover"
-                loading="lazy"
-                decoding="async"
-            />
+        {% else %}
+            {% set image_url = get_url(path='assets/blog-default.png') %}
         {% endif %}
 
+        <!-- Card Image -->
+        <img
+            src="{{ image_url | safe }}"
+            alt="{{ page.title }}"
+            class="w-full h-50 object-cover"
+            loading="lazy"
+            decoding="async"
+        />
+
         <div class="p-6">
-            <h2 class="text-xl font-semibold text-white mb-2">
+            <h2 class="text-2xl font-semibold text-white">
                 {{ page.title }}
             </h2>
-            <p class="text-white text-sm">{{ page.date }}</p>
+            <p class="text-blue-400 text-sm mt-2">{{ page.date }}</p>
+            <p class="text-gray-300 text-sm mt-2">{{ page.description }}</p>
         </div>
     </a>
     {% endfor %}
 </div>
 
-<!-- ElasticLunr and Script -->
+<!-- Load ElasticLunr and Zola's search index -->
 <script src="{{ get_url(path='elasticlunr.min.js') | safe }}"></script>
+<script src="{{ get_url(path='search_index.en.js') | safe }}"></script>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     const input = document.getElementById("search-input");
@@ -64,29 +69,28 @@ document.addEventListener("DOMContentLoaded", function () {
     const index = elasticlunr(function () {
         this.addField("title");
         this.addField("description");
-        this.setRef("url");
+        this.setRef("id");
     });
 
-    cards.forEach(card => {
-        index.addDoc({
-            title: card.dataset.title,
-            description: card.dataset.description,
-            url: card.dataset.url
-        });
-    });
+    const docs = window.searchIndex.documentStore.docs;
+    for (const id in docs) {
+        if (docs.hasOwnProperty(id)) {
+            index.addDoc(docs[id]);
+        }
+    }
 
     input.addEventListener("input", function () {
-        const query = this.value.trim();
-        if (query.length < 1) {
+        const query = this.value.trim().toLowerCase();
+        if (!query) {
             cards.forEach(c => c.style.display = "");
             return;
         }
 
-        const results = index.search(query, { expand: true });
-        const urls = results.map(r => r.ref);
+        const resultUrls = index.search(query, { expand: true }).map(r => r.ref);
 
         cards.forEach(card => {
-            card.style.display = urls.includes(card.dataset.url) ? "" : "none";
+            const url = card.dataset.url;
+            card.style.display = resultUrls.includes(url) ? "" : "none";
         });
     });
 });

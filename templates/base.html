@@ -4,8 +4,9 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>{% block title %}{% endblock title %} - Coolans</title>
+        <link rel="icon" href="/assets/favicon.ico">
         {% block rss %}
-          <link rel="alternate" type="application/rss+xml" title="RSS" href="{{ get_url(path="rss.xml", trailing_slash=false) }}">
+          <link rel="alternate" type="application/rss+xml" title="RSS" href="{{ get_url(path='rss.xml', trailing_slash=false) }}">
         {% endblock %}
         <link
             rel="stylesheet"
@@ -32,7 +33,7 @@
                 }
             });
 
-            function openFullscreenTailwind(imgElement) {
+            function openFullscreenImage(imgElement) {
                 const overlay = document.createElement('div');
                 overlay.className = `
                     fixed inset-0 bg-black bg-opacity-90 backdrop-blur-sm flex items-center justify-center z-50

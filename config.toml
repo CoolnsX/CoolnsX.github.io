@@ -5,7 +5,7 @@ base_url = "https://coolans.dev"
 compile_sass = false
 
 # When set to "true", the generated HTML files are minified.
-minify_html = false
+minify_html = true
 
 # When set to "true", a search index is built from the pages and section
 # content for `default_language`.
@@ -42,10 +42,10 @@ include_description = true
 # Whether to include the RFC3339 datetime of the page in the search index
 include_date = true
 # Whether to include the rendered content of the page/section in the index
-include_content = true
+include_content = false
 # At which code point to truncate the content to. Useful if you have a lot of pages and the index would
 # become too big to load on the site. Defaults to not being set.
-truncate_content_length = 100
+# truncate_content_length = 100
 
 [extra]
 # Put all your custom variables here

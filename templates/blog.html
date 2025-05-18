@@ -47,12 +47,24 @@
             decoding="async"
         />
 
-        <div class="p-6">
-            <h2 class="text-2xl font-semibold text-white">
+        <div class="flex flex-col flex-grow p-6">
+            <!-- Title with min-height to reserve space for 2 lines -->
+            <h2 class="text-2xl font-semibold text-white min-h-[4.2rem] leading-snug">
                 {{ page.title }}
             </h2>
-            <p class="subtitle text-blue-400 mt-2">{{ page.date }}</p>
-            <p class="text-gray-300 text-sm mt-3">{{ page.description }}</p>
+
+            <!-- Spacer pushes below content to the bottom -->
+            <div class="mt-auto">
+                <!-- Date -->
+                <p class="subtitle text-blue-400 mt-2">
+                    {{ page.date | date(format="%B %d, %Y") }}
+                </p>
+
+                <!-- Description -->
+                <p class="text-gray-300 text-sm mt-3 line-clamp-3">
+                    {{ page.description }}
+                </p>
+            </div>
         </div>
     </a>
     {% endfor %}
@@ -69,6 +81,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const index = elasticlunr(function () {
         this.addField("title");
         this.addField("description");
+        this.addField("date");
         this.setRef("id");
     });
 

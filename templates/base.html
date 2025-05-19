@@ -12,24 +12,34 @@
             rel="stylesheet"
             href="{{ get_url(path='main.css') | safe }}?v={{ get_hash(path='main.css') }}"
         />
-        <script defer>
-            // Mobile menu toggle
+        <script>
             function toggleMobileMenu() {
-                const menu = document.getElementById("mobile-menu");
-                menu.classList.toggle("hidden");
+                const toggleButton = document.getElementById("toggle-menu-button");
+                const mobileMenu = document.getElementById("mobile-menu");
+                const svg = toggleButton.querySelector("svg");
+                mobileMenu.classList.toggle("hidden");
+                const isMenuOpen = !mobileMenu.classList.contains("hidden");
+                svg.querySelector("path").setAttribute(
+                    "d",
+                    isMenuOpen
+                        ? "M6 18L18 6M6 6l12 12" // X icon
+                        : "M4 6h16M4 12h16M4 18h16" // Hamburger icon
+                );
             }
 
-            document.addEventListener("click", function (event) {
-                const menu = document.getElementById("mobile-menu");
-                const button = event.target.closest("button[aria-label='Toggle menu']");
+            // Hide menu on outside click
+            document.addEventListener("click", function(event) {
+                const toggleButton = document.getElementById("toggle-menu-button");
+                const mobileMenu = document.getElementById("mobile-menu");
+                const isClickInsideMenu = mobileMenu.contains(event.target);
+                const isClickInsideButton = toggleButton.contains(event.target);
 
-                // If menu is open, and click is outside menu and button — close it
-                if (
-                    !menu.classList.contains("hidden") &&
-                    !menu.contains(event.target) &&
-                    !button
-                ) {
-                    menu.classList.add("hidden");
+                if (!isClickInsideMenu && !isClickInsideButton) {
+                    mobileMenu.classList.add("hidden");
+                    const svg = toggleButton.querySelector("svg");
+                    svg.querySelector("path").setAttribute(
+                        "d","M4 6h16M4 12h16M4 18h16"
+                    );
                 }
             });
 
@@ -52,6 +62,21 @@
                 overlay.appendChild(fullscreenImage);
                 document.body.appendChild(overlay);
             }
+
+            let lastScroll = 0;
+
+            window.addEventListener("scroll", () => {
+                const nav = document.getElementById("top-header");
+                const currentScroll = window.pageYOffset;
+
+                if (currentScroll > lastScroll) {
+                    nav.style.transform = "translateY(-100%)";
+                } else {
+                    nav.style.transform = "translateY(0)";
+                }
+
+                lastScroll = currentScroll;
+            });
         </script>
         <link rel="preload" as="image" href="/assets/background.webp" type="image/webp"/>
         <style>
@@ -69,63 +94,55 @@
         <div class="fixed inset-0 bg-black/70 -z-5"></div>
 
         <!-- Top Navigation -->
-        <nav class="sticky top-0 z-50 bg-transparent backdrop-blur py-4">
-            <div
-                class="container mx-auto px-4 flex justify-between items-center"
-            >
-                <!-- Logo Island -->
-                <div
-                    class="px-6 py-3 rounded-2xl bg-gray-900/80 border border-gray-800 shadow-xl backdrop-blur-md"
-                >
-                    <a href="/" class="text-xl font-bold text-white">Coolans</a>
-                </div>
+        <header id="top-header" class="sticky top-0 z-50 bg-transparent pt-2 transition-all duration-300 ease-in-out">
+            <div class="container mx-auto px-4 flex justify-center">
+                <!-- Entire Header Island -->
+                <div class="w-full max-w-screen-2xl flex justify-between items-center px-6 py-3">
 
-                <!-- Mobile menu button -->
-                <button
-                    class="sm:hidden px-3 py-3 rounded-lg text-gray-300 bg-gray-900/80 border border-gray-800 hover:text-white focus:outline-none focus:ring-2 focus:ring-white"
-                    aria-label="Toggle menu"
-                    onclick="toggleMobileMenu()"
-                >
-                    <svg
-                        class="w-6 h-6"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        viewBox="0 0 24 24"
+                    <!-- Logo -->
+                    <a href="/" class="text-xl font-bold text-white rounded-2xl px-6 py-2.5 bg-gray-900/70 border border-gray-800 shadow-xl backdrop-blur-md">
+                        Coolans
+                    </a>
+
+                    <!-- Mobile Menu Button -->
+                    <button id="toggle-menu-button"
+                        class="sm:hidden px-3 py-3 rounded-lg text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-400 bg-gray-900/70 border border-gray-800 shadow-xl backdrop-blur-md"
+                        aria-label="Toggle menu"
+                        onclick="toggleMobileMenu()"
                     >
-                        <path d="M4 6h16M4 12h16M4 18h16" />
-                    </svg>
-                </button>
+                        <svg
+                            class="w-6 h-6"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            viewBox="0 0 24 24"
+                        >
+                            <path d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
 
-                <!-- Nav Links Island -->
-                <ul
-                    id="mobile-menu"
-                    class="hidden sm:flex sm:static absolute right-4 top-full mt-2 sm:mt-0 px-6 py-3 rounded-2xl bg-gray-900/70 border border-gray-800 shadow-xl backdrop-blur-md space-x-6 sm:space-x-6 flex-col sm:flex-row text-gray-300 sm:items-center"
-                >
-                    <li>
-                        <a
-                            href="/"
-                            class="hover:text-blue-400 block py-2 sm:py-0"
-                            >Home</a
-                        >
-                    </li>
-                    <li>
-                        <a
-                            href="/blog"
-                            class="hover:text-blue-400 block py-2 sm:py-0"
-                            >Blogs</a
-                        >
-                    </li>
-                </ul>
+                    <!-- Nav Links -->
+                    <ul
+                        id="mobile-menu"
+                        class="hidden sm:flex sm:static absolute right-10 top-full px-6 py-3 rounded-2xl bg-gray-900/70 border border-gray-800 shadow-xl backdrop-blur-md space-x-6 sm:space-x-6 flex-col sm:flex-row max-w-screen text-gray-300 sm:items-center"
+                    >
+                        <li>
+                            <a href="/" class="hover:text-blue-400 block py-2 sm:py-0">Home</a>
+                        </li>
+                        <li>
+                            <a href="/blog" class="hover:text-blue-400 block py-2 sm:py-0">Blogs</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </nav>
+        </header>
 
         <!-- Main Content Section -->
         <main class="flex-grow section py-10 relative z-10 rounded-2xl">
             <div
-                class="container mx-auto px-4"
+                class="container mx-auto px-6"
             >
                 <div
                     class="p-8 rounded-2xl bg-gray-900/80 border border-gray-800 shadow-xl backdrop-blur-md text-center text-sm"
@@ -136,12 +153,12 @@
         </main>
 
         <!-- Footer -->
-        <footer class="w-full py-10 relative z-10">
-            <div class="container mx-auto px-4">
+        <footer class="w-full py-4 relative z-10">
+            <div class="container mx-auto px-10">
                 <div
-                    class="px-6 py-4 rounded-2xl bg-gray-900/80 border border-gray-800 shadow-xl backdrop-blur-md text-center text-sm text-gray-400"
+                    class="px-6 py-2 rounded-2xl bg-gray-900/80 border border-gray-800 shadow-xl backdrop-blur-md text-center text-sm text-gray-400"
                 >
-                    &copy; {{ now() | date(format="%Y") }} Coolans. Exhausted Presevance. No Rights Reserved.
+                    {{ now() | date(format="%Y") }} Coolans. Exhausted Presevance. No Rights Reserved.
                 </div>
             </div>
         </footer>

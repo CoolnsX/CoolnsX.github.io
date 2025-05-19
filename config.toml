@@ -1,6 +1,9 @@
 # The URL the site will be built for
 base_url = "https://coolans.dev"
 
+# The site title and description; used in feeds by default.
+title = "Coolans Blogs"
+
 # Whether to automatically compile all Sass files in the sass directory
 compile_sass = false
 

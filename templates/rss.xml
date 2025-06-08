@@ -38,8 +38,10 @@
             {%- else -%}
                 {%- set image_url = get_url(path=page.extra.image) -%}
             {%- endif -%}
+            {% else %}
+            {% set image_url = get_url(path='assets/blog-default.png') %}
+            {%- endif -%}
             <media:thumbnail url="{{ image_url | safe }}" width="90" height="160"/>
-            {% endif -%}
             <guid>{{ page.permalink | escape_xml | safe }}</guid>
             <description xml:base="{{ page.permalink | escape_xml | safe }}">{% if page.summary %}{{ page.summary }}{% else %}{{ page.content }}{% endif %}</description>
         </item>

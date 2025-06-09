@@ -1,4 +1,10 @@
+{% set href = text
+    | regex_replace(pattern="[\\\/#%<>\[\]\(\)`\\^{}\|.]", rep="")
+    | regex_replace(pattern=" +", rep="-")
+    | lower
+%}
+
 <hr class="border-gray-700 my-4">
-<h3 class="text-3xl font-bold">
-  {{ text }}
-</h3>
+<a id="{{ href }}" class="text-3xl font-bold focus:outline-none focus:ring-0" href="#{{ href }}" aria-label="Anchor link for : {{ href }}">
+  {{ text | safe }}
+</a>

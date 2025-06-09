@@ -1,5 +1,7 @@
 +++
 title = "Anime Tracker"
+description = "Comprehensive list of anime I've watched with season progress."
+date = 2025-06-08
 updated = 2025-06-09
 +++
 

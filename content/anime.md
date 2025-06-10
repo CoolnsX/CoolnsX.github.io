@@ -2,7 +2,7 @@
 title = "Anime Tracker"
 description = "Comprehensive list of anime I've watched with season progress."
 date = 2025-06-08
-updated = 2025-06-09
+updated = 2025-06-10
 +++
 
 {{ subheading(text="Currently Watching / Tracking") }}
@@ -10,7 +10,7 @@ updated = 2025-06-09
 {{ table(
       heading=["Name", "Current Season", "Status"],
       rows=[
-          ["Gintama", "1", "Watching"],
+          ["Gintama", "2", "Watching"],
           ["Aharen-san wa Hakarenai", "2", "Watching"],
           ["Haite Kudasai, Takamine-san", "1", "Watching"],
           ["Fairy Tail: 100 Years Quest", "1", "Airing Paused"],

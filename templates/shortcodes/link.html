@@ -1,1 +1,1 @@
-<a target="_blank" rel="noopener noreferrer" href="{{ href }}" class="text-blue-400">{{ text }}</a>
+<a {% if href is starting_with("http") %} target="_blank" {% endif %} rel="noopener noreferrer" href="{{ href }}" class="text-blue-400">{{ text }}</a>

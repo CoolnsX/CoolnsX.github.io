@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>{% block title %}{% endblock title %} - Coolans</title>
         <link rel="icon" href="/assets/favicon.ico">
+        <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
         {% block rss %}
           <link rel="alternate" type="application/rss+xml" title="RSS" href="{{ get_url(path='rss.xml', trailing_slash=false) }}">
         {% endblock %}
@@ -89,9 +90,7 @@
 
     <body class="min-h-screen flex flex-col bg-black text-white relative transition-colors duration-300">
         <!-- Blurred Background Image -->
-        <div class="fixed inset-0 -z-10 bg-image bg-cover bg-center blur-md"></div>
-
-        <div class="fixed inset-0 bg-black/70 -z-5"></div>
+        <div class="fixed inset-0 -z-10 bg-image bg-cover bg-center"></div>
 
         <!-- Top Navigation -->
         <header id="top-header" class="sticky top-0 z-50 bg-transparent pt-2 transition-all duration-300 ease-in-out">

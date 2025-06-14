@@ -42,7 +42,7 @@ I learnt about ani-cli from Bugswriter YouTuber, and quickly jumped to it, insta
 {% end %}
 
 {% paragraph(class="m-8") %}
-We made the Discord server to give support to new users trying ani-cli. But the irony is, we were giving more Linux-related advice than the actual ani-cli problem. The majority of people were from Windows, so you can deduce it. We were sharing knowledge, and this also increased my vocabulary and my grammar. English is not my first language. I learned about servers, home labs, etc. And fast forward to here, I am writing this blog for my website, which is hosted on a server I bought (stay tuned to how I set up my server).
+We made the Discord server to give support to new users trying ani-cli. But the irony is, we were giving more Linux-related advice than the actual ani-cli problem. The majority of people were from Windows, so you can deduce it. We were sharing knowledge, and this also increased my vocabulary and my grammar. English is not my first language. I learned about servers, home labs, etc. And fast forward to here, I am writing this blog for my website, which is hosted on a server I bought ({{ link(text="how I set up my server",href="/blog/server-setup-intro/")}}).
 {% end %}
 
 {% paragraph(class="m-8") %}

@@ -2,7 +2,7 @@
 title = "Anime Tracker"
 description = "Comprehensive list of anime I've watched with season progress."
 date = 2025-06-08
-updated = 2025-06-10
+updated = 2025-06-23
 +++
 
 {{ subheading(text="Currently Watching / Tracking") }}
@@ -11,9 +11,6 @@ updated = 2025-06-10
       heading=["Name", "Current Season", "Status"],
       rows=[
           ["Gintama", "2", "Watching"],
-          ["Aharen-san wa Hakarenai", "2", "Watching"],
-          ["Haite Kudasai, Takamine-san", "1", "Watching"],
-          ["Fairy Tail: 100 Years Quest", "1", "Airing Paused"],
           ["Grand Blue", "2", "Airing in Summer 2025 (jul-sept)"],
           ["Seishun Buta Yarou wa Santa Claus no Yume wo Minai (Bunny girl senpai sequel)", "2", "Airing in Summer 2025 (jul-sept)"],
           ["Sono Bisque Doll wa Koi wo Suru", "2", "Airing in Summer 2025 (jul-sept)"],
@@ -21,6 +18,7 @@ updated = 2025-06-10
           ["One Punch Man", "3", "Airing in Fall 2025 (oct-dec)"],
           ["Spy x Family", "3", "Airing in Fall 2025 (oct-dec)"],
           ["Boku no Hero Academia FINAL SEASON", "8", "Airing in Fall 2025 (oct-dec)"],
+          ["Fairy Tail: 100 Years Quest", "1", "Airing Paused"],
       ]
 ) }}
 
@@ -210,7 +208,7 @@ updated = 2025-06-10
           ["megami-ryou no ryoubu-kun", "1"],
           ["Senpai ga Urusai Kouhai no Hanashi", "1"],
           ["My dress up darling", "1"],
-          ["Aharen-san wa Hakarenai", "1"],
+          ["Aharen-san wa Hakarenai", "2"],
           ["Fuuka", "1"],
           ["Koi to senkyo to chocolate", "1"],
           ["A Good Librarian Like a Good Shepherd", "1"],
@@ -220,5 +218,6 @@ updated = 2025-06-10
           ["Spy x family", "2"],
           ["Megami no cafe terrace", "2"],
           ["Uchi no Kaisha no Chiisai Senpai no Hanashi", "1"],
+          ["Haite Kudasai, Takamine-san", "1"],
       ]
 ) }}

@@ -2,7 +2,7 @@
 title = "Anime Tracker"
 description = "Comprehensive list of anime I've watched with season progress."
 date = 2025-06-08
-updated = 2025-06-23
+updated = 2025-07-03
 +++
 
 {{ subheading(text="Currently Watching / Tracking") }}
